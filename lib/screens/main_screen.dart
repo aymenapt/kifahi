@@ -6,6 +6,8 @@ import 'package:kifah/widgets/defaultbuttomn/defaultbuttomn.dart';
 import 'package:kifah/widgets/mytextfromfield/my_textfrom_field.dart';
 import 'package:kifah/widgets/mytoast/mytoast.dart';
 
+
+
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -14,17 +16,15 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  String separateWithSlash(String input) {
+    // Split the input string into a list of characters
+    List<String> characters = input.split('');
 
-String separateWithSlash(String input) {
-  // Split the input string into a list of characters
-  List<String> characters = input.split('');
+    // Join the characters with "/" in between
+    String separatedString = characters.join('/');
 
-  // Join the characters with "/" in between
-  String separatedString = characters.join('/');
-
-  return separatedString;
-}
-
+    return separatedString;
+  }
 
   String dotLess(String input) {
     var words = input.split(" ");
@@ -119,14 +119,12 @@ String separateWithSlash(String input) {
                 Container(
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(right: width * 0.06),
-                  
-                    child: MyDefaultTextStyle(
-                        text:
-                            "منصة لإنشاء هاشتاج واعادة صياغة المنشورات بطريقة لاتتبعها خوارزميات السوشل ميديا نصرة لإخواننا في فلسطين ودعم قضية المسلمين.",
-                        height: height * 0.016,
-                        color: subtext),
-                  ),
-                
+                  child: MyDefaultTextStyle(
+                      text:
+                          "منصة لإنشاء هاشتاج واعادة صياغة المنشورات بطريقة لاتتبعها خوارزميات السوشل ميديا نصرة لإخواننا في فلسطين ودعم قضية المسلمين.",
+                      height: height * 0.016,
+                      color: subtext),
+                ),
                 SizedBox(
                   height: height * 0.025,
                 ),
@@ -139,6 +137,7 @@ String separateWithSlash(String input) {
                             context: context,
                             builder: (ctx) {
                               return Container(
+                                width: width,
                                 margin: EdgeInsets.only(top: height * 0.04),
                                 height: height * 0.3,
                                 child: Column(
@@ -207,31 +206,23 @@ String separateWithSlash(String input) {
                   margin:
                       EdgeInsets.only(right: width * 0.06, left: width * 0.06),
                   child: Defaultbutton(
-
-                   
                       functon: () {
-
-                        if(dotless){
-setState(() {
-                          result = dotLess(textEditingController.text);
-                        });
-
-                        print(textEditingController.text);
-                        print(result);
-                        }
-
-                        else{
-
+                        if (dotless) {
                           setState(() {
-                          result = separateWithSlash(textEditingController.text);
-                        });
+                            result = dotLess(textEditingController.text);
+                          });
 
-                        print(textEditingController.text);
-                        print(result);
+                          print(textEditingController.text);
+                          print(result);
+                        } else {
+                          setState(() {
+                            result =
+                                separateWithSlash(textEditingController.text);
+                          });
 
-
+                          print(textEditingController.text);
+                          print(result);
                         }
-                        
                       },
                       text: 'تشفير النص',
                       height: height * 0.07,
@@ -270,20 +261,18 @@ setState(() {
                           color: black,
                           bold: true),
                     ),
-                  
-                     Defaultbutton(
-                          functon: () {
-                            FlutterClipboard.copy(result)
-                                .then((value) => showtoast("تم نسخ الناتج"));
-                          },
-                          text: 'نسخ النتائج كاملا',
-                          height: height * 0.04,
-                          width: width * 0.9,
-                          color: copytext,
-                          textcolor: black,
-                          fontsize: height * 0.016,
-                          border: 3),
-                   
+                    Defaultbutton(
+                        functon: () {
+                          FlutterClipboard.copy(result)
+                              .then((value) => showtoast("تم نسخ الناتج"));
+                        },
+                        text: 'نسخ النتائج كاملا',
+                        height: height * 0.04,
+                        width: width * 0.9,
+                        color: copytext,
+                        textcolor: black,
+                        fontsize: height * 0.016,
+                        border: 3),
                   ]),
                 ),
               ],
